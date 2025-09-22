@@ -8,6 +8,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<User> Users => Set<User>();
     public DbSet<Product> Products => Set<Product>();
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (optionsBuilder.IsConfigured)
+            return;
+
+        var conn = Environment.GetEnvironmentVariable("DB_CONNECTION");
+        if (!string.IsNullOrWhiteSpace(conn))
+            optionsBuilder.UseNpgsql(conn);
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
