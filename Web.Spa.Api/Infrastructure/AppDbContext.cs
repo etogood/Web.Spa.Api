@@ -16,7 +16,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         {
             e.ToTable("users");
             e.HasKey(x => x.Id);
-            e.Property(x => x.Id).UseSerialColumn();
             e.Property(x => x.Username).IsRequired().HasMaxLength(50);
             e.Property(x => x.Email).IsRequired().HasMaxLength(100);
             e.Property(x => x.PasswordHash).IsRequired();
@@ -28,7 +27,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         {
             e.ToTable("products");
             e.HasKey(x => x.Id);
-            e.Property(x => x.Id).UseSerialColumn();
             e.Property(x => x.Title).IsRequired().HasMaxLength(200);
             e.Property(x => x.Description).IsRequired();
             e.Property(x => x.Price).HasColumnType("numeric(10,2)");
